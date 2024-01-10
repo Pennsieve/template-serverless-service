@@ -12,13 +12,11 @@ func init() {
 	logger.Info("init()")
 }
 
+// TODO update Handler function name
 func TemplateServiceHandler(request events.APIGatewayV2HTTPRequest) (*events.APIGatewayV2HTTPResponse, error) {
-	var err error
-	var apiResponse *events.APIGatewayV2HTTPResponse
 	logger = logger.With("requestID", request.RequestContext.RequestID)
 
-	logger.Info("TemplateServiceHandler()")
-	apiResponse, err = handleRequest()
+	apiResponse, err := handleRequest()
 
 	return apiResponse, err
 }

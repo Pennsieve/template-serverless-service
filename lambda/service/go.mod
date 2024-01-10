@@ -1,4 +1,5 @@
 module github.com/pennsieve/template-serverless-service/service
+//TODO update module name
 
 go 1.21
 
