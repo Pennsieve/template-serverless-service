@@ -10,8 +10,8 @@ A template for building a new Pennsieve Serverless Service
 * In the new `foo-service` repo search for the `TODO` comments to find names/strings that need to be updated.
   Usually the update is simply to change `template-serverless-servce` to `foo-service` or `TemplateServerlessService`
   to `FooService`, etc.
-* The `TODO` comments mostly only identify where a name is first declared. So fix any compilation errors or broken
-  Terraform references with the new names.
+* The `TODO` comments mostly only identify where a name is first declared. So fix any compilation errors with the new
+  names.
 * Replace this README with one for Foo service!
 
 ## Preferred Go version and libraries
