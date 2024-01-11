@@ -3,8 +3,11 @@
 LAMBDA_BUCKET ?= "pennsieve-cc-lambda-functions-use1"
 WORKING_DIR   ?= "$(shell pwd)"
 API_DIR ?= "api"
+# TODO replace template-serverless-service
 SERVICE_NAME  ?= "template-serverless-service"
+# TODO replace template_serverless_service
 SERVICE_EXEC  ?= "template_serverless_service"
+# TODO replace templateServerlessService
 SERVICE_PACK  ?= "templateServerlessService"
 PACKAGE_NAME  ?= "${SERVICE_NAME}-${IMAGE_TAG}.zip"
 

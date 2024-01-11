@@ -1,5 +1,6 @@
+# TODO update aws_iam_role name
 resource "aws_iam_role" "template_service_lambda_role" {
-  name = "${var.environment_name}-${var.service_name}-template-service-lambda-role-${data.terraform_remote_state.region.outputs.aws_region_shortname}"
+  name = "${var.environment_name}-${var.service_name}-lambda-role-${data.terraform_remote_state.region.outputs.aws_region_shortname}"
 
   assume_role_policy = <<EOF
 {
@@ -18,22 +19,26 @@ resource "aws_iam_role" "template_service_lambda_role" {
 EOF
 }
 
+# TODO update aws_iam_role_policy_attachment name
 resource "aws_iam_role_policy_attachment" "template_service_lambda_iam_policy_attachment" {
   role       = aws_iam_role.template_service_lambda_role.name
   policy_arn = aws_iam_policy.template_service_lambda_iam_policy.arn
 }
 
+# TODO update aws_iam_policy name
 resource "aws_iam_policy" "template_service_lambda_iam_policy" {
   name   = "${var.environment_name}-${var.service_name}-lambda-iam-policy-${data.terraform_remote_state.region.outputs.aws_region_shortname}"
   path   = "/"
   policy = data.aws_iam_policy_document.template_service_iam_policy_document.json
 }
 
+# TODO update aws_iam_policy_document name
 data "aws_iam_policy_document" "template_service_iam_policy_document" {
 
   statement {
-    sid    = "TemplateServiceLambdaLogsPermissions"
-    effect = "Allow"
+    # TODO update sid
+    sid     = "TemplateServiceLambdaLogsPermissions"
+    effect  = "Allow"
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
@@ -45,8 +50,9 @@ data "aws_iam_policy_document" "template_service_iam_policy_document" {
   }
 
   statement {
-    sid    = "TemplateServiceLambdaEC2Permissions"
-    effect = "Allow"
+    # TODO update sid
+    sid     = "TemplateServiceLambdaEC2Permissions"
+    effect  = "Allow"
     actions = [
       "ec2:CreateNetworkInterface",
       "ec2:DescribeNetworkInterfaces",
