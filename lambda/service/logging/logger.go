@@ -5,11 +5,11 @@ import (
 	"os"
 )
 
-// Level To change the log level at runtime, for example to DEBUG, call Level.Set(slog.LevelDebug)
-// Default value is slog.LevelInfo
+// Level is the current log level of Default. To change the level at runtime, for example to DEBUG, call Level.Set(slog.LevelDebug)
+// Defaults to slog.LevelInfo
 var Level = new(slog.LevelVar)
 
-// Default A *slog.Logger configured with a JSON handler and a level set by environment variable LOG_LEVEL
+// Default is a *slog.Logger configured with a JSON handler and a level set by environment variable LOG_LEVEL
 // If LOG_LEVEL is not set, or is set to an unknown value, level defaults to slog.LevelInfo
 var Default *slog.Logger
 
