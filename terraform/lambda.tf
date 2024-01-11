@@ -2,7 +2,7 @@ resource "aws_lambda_function" "service_lambda" {
   # TODO update description
   description   = "Template for building a Lambda Function which handles requests for a new serverless Service"
   function_name = "${var.environment_name}-${var.service_name}-service-lambda-${data.terraform_remote_state.region.outputs.aws_region_shortname}"
-  # TODO update handler name to match SERVICE_EXEC variable in Makefile
+  # TODO update handler name to match value of SERVICE_EXEC variable in Makefile
   handler       = "template_serverless_service"
   runtime       = "go1.x"
   role          = aws_iam_role.service_lambda_role.arn
