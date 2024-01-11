@@ -21,3 +21,8 @@ A template for building a new Pennsieve Serverless Service
 * Postgres Driver: [jackc/pgx](https://github.com/jackc/pgx) unless you need to interact with a Pennsieve Go library
   that still uses [lib/pq](https://github.com/lib/pq) in which case, use that.
 * Testing utility: [stretchr/testify](https://pkg.go.dev/github.com/stretchr/testify)
+
+## Additional steps
+* Create and populate prod and non-prod `foo-service` directories in [Pennsieve/infrastructure](https://github.com/Pennsieve/infrastructure)
+* Create prod and non-prod `foo-service` service-deploy jobs in Jenkins.
+* Add new endpoint in [Pennsieve/pennsieve-go-api](https://github.com/Pennsieve/pennsieve-go-api).
