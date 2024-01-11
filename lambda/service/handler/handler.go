@@ -2,11 +2,11 @@ package handler
 
 import (
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/pennsieve/template-serverless-service/service/logging"
 	"log/slog"
-	"os"
 )
 
-var logger = slog.New(slog.NewJSONHandler(os.Stdout, nil))
+var logger = logging.Default
 
 func init() {
 	logger.Info("init()")
@@ -14,7 +14,7 @@ func init() {
 
 // TODO update Handler function name
 func TemplateServiceHandler(request events.APIGatewayV2HTTPRequest) (*events.APIGatewayV2HTTPResponse, error) {
-	logger = logger.With("requestID", request.RequestContext.RequestID)
+	logger = logger.With(slog.String("requestID", request.RequestContext.RequestID))
 
 	apiResponse, err := handleRequest()
 
