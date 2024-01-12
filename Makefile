@@ -2,13 +2,8 @@
 
 LAMBDA_BUCKET ?= "pennsieve-cc-lambda-functions-use1"
 WORKING_DIR   ?= "$(shell pwd)"
-API_DIR ?= "api"
 # TODO replace template-serverless-service
 SERVICE_NAME  ?= "template-serverless-service"
-# TODO replace template_serverless_service
-SERVICE_EXEC  ?= "template_serverless_service"
-# TODO replace templateServerlessService
-SERVICE_PACK  ?= "templateServerlessService"
 PACKAGE_NAME  ?= "${SERVICE_NAME}-${IMAGE_TAG}.zip"
 
 .DEFAULT: help
@@ -51,9 +46,9 @@ package:
 	@echo "***********************"
 	@echo ""
 	cd lambda/service; \
-  		env GOOS=linux GOARCH=amd64 go build -o $(WORKING_DIR)/lambda/bin/$(SERVICE_PACK)/$(SERVICE_EXEC); \
-		cd $(WORKING_DIR)/lambda/bin/$(SERVICE_PACK)/ ; \
-			zip -r $(WORKING_DIR)/lambda/bin/$(SERVICE_PACK)/$(PACKAGE_NAME) .
+  		env GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -o $(WORKING_DIR)/lambda/bin/service/bootstrap; \
+		cd $(WORKING_DIR)/lambda/bin/service/ ; \
+			zip -r $(WORKING_DIR)/lambda/bin/service/$(PACKAGE_NAME) .
 
 # Copy Service lambda to S3 location
 publish:
@@ -63,8 +58,8 @@ publish:
 	@echo "*   Publishing lambda   *"
 	@echo "*************************"
 	@echo ""
-	aws s3 cp $(WORKING_DIR)/lambda/bin/$(SERVICE_PACK)/$(PACKAGE_NAME) s3://$(LAMBDA_BUCKET)/$(SERVICE_NAME)/
-	rm -rf $(WORKING_DIR)/lambda/bin/$(SERVICE_PACK)/$(PACKAGE_NAME)
+	aws s3 cp $(WORKING_DIR)/lambda/bin/service/$(PACKAGE_NAME) s3://$(LAMBDA_BUCKET)/$(SERVICE_NAME)/
+	rm -rf $(WORKING_DIR)/lambda/bin/service/$(PACKAGE_NAME) $(WORKING_DIR)/lambda/bin/service/bootstrap
 
 # Run go mod tidy on modules
 tidy:

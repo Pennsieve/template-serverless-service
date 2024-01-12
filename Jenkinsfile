@@ -8,6 +8,7 @@ ansiColor('xterm') {
   def authorName  = sh(returnStdout: true, script: 'git --no-pager show --format="%an" --no-patch')
   def isMain    = env.BRANCH_NAME == "main"
   def serviceName = env.JOB_NAME.tokenize("/")[1]
+  def isRealService = serviceName != "template-serverless-service"
 
   def commitHash  = sh(returnStdout: true, script: 'git rev-parse HEAD | cut -c-7').trim()
   def imageTag    = "${env.BUILD_NUMBER}-${commitHash}"
@@ -26,12 +27,14 @@ ansiColor('xterm') {
         sh "IMAGE_TAG=${imageTag} make publish"
       }
 
-      stage("Deploy") {
-        build job: "service-deploy/pennsieve-non-prod/us-east-1/dev-vpc-use1/dev/${serviceName}",
-        parameters: [
-          string(name: 'IMAGE_TAG', value: imageTag),
-          string(name: 'TERRAFORM_ACTION', value: 'apply')
-        ]
+      if(isRealService) {
+        stage("Deploy") {
+            build job: "service-deploy/pennsieve-non-prod/us-east-1/dev-vpc-use1/dev/${serviceName}",
+            parameters: [
+                string(name: 'IMAGE_TAG', value: imageTag),
+                string(name: 'TERRAFORM_ACTION', value: 'apply')
+            ]
+        }
       }
     }
   } catch (e) {
