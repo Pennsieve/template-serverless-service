@@ -47,3 +47,8 @@ data "terraform_remote_state" "platform_infrastructure" {
     profile = var.aws_account
   }
 }
+
+# Import AWS Default SecretsManager KMS Key
+data "aws_kms_key" "ssm_kms_key" {
+  key_id = "alias/aws/secretsmanager"
+}

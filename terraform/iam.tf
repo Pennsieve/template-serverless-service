@@ -60,7 +60,23 @@ data "aws_iam_policy_document" "service_iam_policy_document" {
   }
 
   statement {
-    sid    = "SSMPermissions"
+    # TODO update sid
+    sid    = "TemplateServiceSecretsManagerPermissions"
+    effect = "Allow"
+
+    actions = [
+      "kms:Decrypt",
+      "secretsmanager:GetSecretValue",
+    ]
+
+    resources = [
+      data.aws_kms_key.ssm_kms_key.arn,
+    ]
+  }
+
+  statement {
+    # TODO update sid
+    sid    = "TemplateServiceSSMPermissions"
     effect = "Allow"
 
     actions = [
