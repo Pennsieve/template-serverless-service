@@ -59,4 +59,17 @@ data "aws_iam_policy_document" "service_iam_policy_document" {
     resources = ["*"]
   }
 
+  statement {
+    sid    = "SSMPermissions"
+    effect = "Allow"
+
+    actions = [
+      "ssm:GetParameter",
+      "ssm:GetParameters",
+      "ssm:GetParametersByPath",
+    ]
+
+    resources = ["arn:aws:ssm:${data.aws_region.current_region.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.environment_name}/${var.service_name}/*"]
+  }
+
 }
