@@ -18,6 +18,14 @@ resource "aws_iam_role" "service_lambda_role" {
 EOF
 }
 
+resource "aws_lambda_permission" "allow_gateway" {
+  statement_id  = "AllowExecutionFromGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.service_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn = "${data.terraform_remote_state.api_gateway.outputs.execution_arn}/*"
+}
+
 resource "aws_iam_role_policy_attachment" "service_lambda_iam_policy_attachment" {
   role       = aws_iam_role.service_lambda_role.name
   policy_arn = aws_iam_policy.service_lambda_iam_policy.arn
